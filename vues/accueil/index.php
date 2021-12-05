@@ -12,7 +12,7 @@ foreach($recettes as $recette){
                 </h1>
             </a>
             <time>
-                <?=substr($recette['dateCreation'],0,11)?>
+                <?= gmdate('j/m/Y', strtotime($recette["dateCreation"])); ?>
             </time>
         </header>
         <p>
