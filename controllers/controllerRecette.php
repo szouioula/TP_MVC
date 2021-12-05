@@ -25,13 +25,20 @@ class ControllerRecette extends Controller
         $recette = $this->recette->getRecette($id);
         $ingredients = $this->recette->getIngredients($id);
         $commentaires = $this->commentaire->getCommentaires($_GET['id']);
-        $this->genererVue(array('recette' => $recette,'ingredients' => $ingredients, 'commentaires' => $commentaires));
+        $this->genererVue(array('recette' => $recette,'ingredients' => $ingredients, 'commentaires' => $commentaires, 'erreur' => $this->erreur));
 
     }
     // Ajoute un commentaire à une recette
     public function commenter()
     {
-        $this->commentaire->ajouterCommentaire($_GET['id'],$_POST['auteur'], $_POST['note'],$_POST['contenu']);
-        // récupérer les paramètres (idRecette, auteur, contenu, note)
+        if (empty($_POST['auteur']) == true){
+            $this->erreur = "l'auteur ne peut pas etre vide";
+            $this->executerAction('recette');
+        }else {
+            $this->commentaire->ajouterCommentaire($_GET['id'],$_POST['auteur'], $_POST['note'],$_POST['contenu']);
+            header('location: index.php?controller=recette&action=recette&id='.$_GET['id']);
+            exit;
+        }
+        
     }
 }

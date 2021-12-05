@@ -12,7 +12,8 @@ class Commentaire extends Modele
     }
     public function ajouterCommentaire($idRecette, $auteur, $contenu, $note)
     {
-        $sql = 'INSERT INTO commentaire (idRecette,auteur,contenu,note,dateCreation) VALUES(?,?,?,?,?)';
-        $this->executerRequete($sql, array($idRecette, $auteur, $contenu, $note));
+        $sql = 'INSERT INTO commentaire (idRecette, auteur, contenu, note, dateCreation) VALUES (?, ?, ?, ?, ?)';
+        $data = [$idRecette, $auteur, $contenu, $note, date('Y-m-d h:i:s')];
+        return $this->executerRequete($sql, $data);
     }
 }
